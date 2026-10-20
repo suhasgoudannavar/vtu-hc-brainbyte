@@ -307,6 +307,6 @@ Released under the [MIT License](LICENSE). See `LICENSE` for details.
 **Brainbyte** · Team ID `VTU-QFF-HC-0048` · Tier `Offline`
 · Built with ⚛️ Qiskit for the VTU-QFF Hackathon
 
-[⬆ Back to Top](#Brainbyte)
+[⬆ Back to Top](#brainbyte)
 
 </div>
