@@ -1,0 +1,7 @@
+# Ignore Python backend from Vercel build
+requirements.txt
+app.py
+src/
+tests/
+pytest.ini
+.venv/
