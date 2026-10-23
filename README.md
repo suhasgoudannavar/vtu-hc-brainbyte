@@ -1,312 +1,175 @@
-<div align="center">
+# 🚨 QRescue: AI-Powered Disaster Response Using Quantum Optimization
 
-# Brainbyte
+[![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12-blue.svg)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.42+-FF4B4B.svg)](https://streamlit.io/)
+[![Google OR-Tools](https://img.shields.io/badge/OR--Tools-CP--SAT-4285F4.svg)](https://developers.google.com/optimization)
+[![Qiskit](https://img.shields.io/badge/Qiskit-2.0+-6929C4.svg)](https://qiskit.org/)
+[![Qiskit Aer](https://img.shields.io/badge/Qiskit%20Aer-Simulator-8A3FFC.svg)](https://github.com/Qiskit/qiskit-aer)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Tests](https://img.shields.io/badge/Tests-25%20Passing-brightgreen.svg)]()
 
-**VTU-QFF-HC-0048** &nbsp;|&nbsp; Tier: **Offline**
-
-</div>
-
----
-
-<div align="center">
-
-| | |
-| :--- | :--- |
-| **Team** | Brainbyte |
-| **Team ID** | VTU-QFF-HC-0048 |
-| **Tier** | Offline |
-| **Repository** | [vtu-hc-brainbyte](https://github.com/vtu-qiskit-fall-fest-2026/vtu-hc-brainbyte.git) |
-| **Organisation** | [vtu-qiskit-fall-fest-2026](https://github.com/vtu-qiskit-fall-fest-2026) |
-| **Event** | VTU-QFF Hackathon — VTU-Qiskit Fall Fest 2026 |
-
-</div>
+> **Educational & Research Prototype:** QRescue is a functional simulation and optimization platform designed for research and educational purposes. It explores the intersection of classical combinatorial optimization and quantum approximate optimization (QAOA) for disaster logistics. It is **not** a validated emergency dispatch system.
 
 ---
 
-## 📌 Table of Contents
-
-- [Team Members](#-team-members-github-ids)
-- [Problem Statement](#-problem-statement)
-- [Proposed Solution](#-proposed-solution)
-- [Approach & Architecture](#-approach--architecture)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [How to Run](#-how-to-run)
-- [How to Push Code](#-how-to-push-code)
-- [Submission Checklist](#-submission-checklist)
-- [Resources](#-resources)
-- [License](#-license)
+## 📌 Problem Statement
+During large-scale natural and technological disasters (floods, landslides, structural collapses, multi-hazard fires), emergency response coordinators face severe operational challenges:
+- Multiple emergencies compete for limited specialized resources (ambulances, swiftwater rescue squads, fire engines, trauma units).
+- Ad-hoc dispatch or greedy nearest-neighbor heuristics cause severe bottlenecks—allocating specialized heavy rescue units to low-priority incidents while catastrophic emergencies remain unserved.
+- Road congestion, collapsed bridges, and debris slow travel times unpredictably.
 
 ---
 
-## 👥 Team Members (GitHub IDs)
-
-> Members are added to this repository as **collaborators** and must accept the
-> GitHub invitation before they can push. Add your GitHub username below.
-
-| # | Name | GitHub Username | Role |
-| :-- | :--- | :--- | :--- |
-| 1 | _Add your name_ | _your-github-username_ | _Team Lead_ |
-| 2 | _Add your name_ | _your-github-username_ | _Developer_ |
-| 3 | _Add your name_ | _your-github-username_ | _Developer_ |
-
-<!--
-Optional: add a plain list instead of the table above.
-- @username1
-- @username2
--->
+## 💡 The QRescue Solution
+**QRescue** provides an end-to-end decision-support simulation platform:
+1. **Multi-Factor Incident Triage:** Prioritizes incidents based on casualty count, severity ($1-5$), time sensitivity, access difficulty, and disaster category.
+2. **Realistic Response-Time Estimation:** Employs Haversine distance with a $1.35\times$ road curvature factor, nominal fleet speeds, and weather/traffic congestion multipliers.
+3. **Classical Constraint Optimization:** Solves the multi-resource allocation problem globally using **Google OR-Tools CP-SAT**, enforcing zero resource conflicts and strict capability matching.
+4. **Quantum Optimization (QAOA):** Maps the allocation problem to a **QUBO** and **Ising spin Hamiltonian**, simulating the **Quantum Approximate Optimization Algorithm (QAOA)** with **Qiskit** and **Qiskit Aer**.
+5. **Universal Constraint Verification:** Independently audits every solution across exclusivity, availability, and capability requirements.
+6. **Side-by-Side Benchmarking:** Compares Greedy Baseline, Classical CP-SAT, and Quantum QAOA on identical scenario parameters.
+7. **One-Click Audit Export:** Generates reproducible JSON payloads, CSV bundles, and Markdown reports.
 
 ---
 
-## ❓ Problem Statement
-
-<!--
-State the problem you are solving. Be specific: what is broken or missing,
-who experiences it, and why does it matter. Link to the official problem
-statement from the brief if one applies.
--->
-
-**Problem:** _Describe the problem in 2–3 sentences._
-
-**Why it matters:** _Explain the impact or opportunity._
-
-**Track / Category:** _Online / Offline · Track 1 / Track 2 · <domain>_
-
----
-
-## 💡 Proposed Solution
-
-<!--
-Describe your solution. Keep it concrete: the core idea, the user flow, and
-the quantum/ML technique you are applying.
--->
-
-**Solution:** _In 2–3 sentences, describe what you built._
-
-**Key idea:** _The one-line technical summary of your approach._
-
-**Why this works:** _How your approach addresses the problem statement._
-
----
-
-## 🧩 Approach & Architecture
-
-<!--
-Walk through how it works. A simple pipeline diagram in text or Mermaid is ideal.
--->
+## 🏗️ System Architecture
 
 ```mermaid
-flowchart LR
-    A[Input Data] --> B[Preprocessing]
-    B --> C[Quantum Circuit / Model]
-    C --> D[Post-processing]
-    D --> E[Output]
-```
+graph TD
+    subgraph Data & Simulation
+        Scenarios[Disaster Scenarios<br/>Flood, Landslide, Multi-Hazard]
+        Triage[Triage Engines<br/>Mode A: Formula | Mode B: Random Forest ML]
+        Travel[Travel Modeling<br/>Curvature Factor + Congestion Multiplier]
+    end
 
-1. **Input** — _what data goes in and in what format_
-2. **Preprocessing** — _cleaning, feature extraction, encoding_
-3. **Quantum core** — _the circuit, ansatz, or algorithm used_
-4. **Post-processing** — _decoding, measurement, scoring_
-5. **Output** — _what the user finally gets_
+    subgraph Optimization Engines
+        Greedy[Greedy Baseline Heuristic]
+        Classical[Google OR-Tools CP-SAT Optimizer]
+        QUBO[QUBO Formulation & Ising Mapping]
+        Quantum[Qiskit QAOA Circuit & Aer Simulation]
+    end
 
----
+    subgraph Validation & UI
+        Checker[Universal Constraint Validator]
+        UI[Streamlit Operations Dashboard]
+        Reports[Export Engine: JSON, CSV, Markdown]
+    end
 
-## 🛠️ Tech Stack
+    Scenarios --> Triage
+    Scenarios --> Travel
+    Triage --> Greedy
+    Triage --> Classical
+    Triage --> QUBO
+    Travel --> Greedy
+    Travel --> Classical
+    Travel --> QUBO
+    QUBO --> Quantum
 
-| Layer | Technology |
-| :--- | :--- |
-| Language | Python 3.11+ |
-| Quantum SDK | Qiskit `>=1.0`, Qiskit Aer, Qiskit Runtime |
-| Optimisation | Qiskit Optimization / COBYLA / SPSA |
-| Simulation | AerSimulator (statevector / noisemodel) |
-| Environment | JupyterLab / VS Code, `venv` |
-| Version control | Git + GitHub |
+    Greedy --> Checker
+    Classical --> Checker
+    Quantum --> Checker
 
----
-
-## 📁 Project Structure
-
-```text
-vtu-hc-brainbyte/
-├── README.md              # This file
-├── requirements.txt       # Python dependencies
-├── pyproject.toml         # Project metadata (optional)
-├── .gitignore
-├── notebooks/             # Jupyter notebooks for experiments
-│   └── exploration.ipynb
-├── src/
-│   ├── __init__.py
-│   ├── circuit.py         # Quantum circuit construction
-│   ├── optimizer.py       # Optimization loop
-│   └── main.py            # Entry point
-├── data/                  # Datasets (use Git LFS for large files)
-├── tests/                 # Unit tests
-│   └── test_circuit.py
-└── docs/                  # Notes, diagrams, reports
+    Checker --> UI
+    Checker --> Reports
 ```
 
 ---
 
-## 🚀 How to Run
+## 🛠️ Free & Open-Source Technology Stack
 
-### Prerequisites
+| Component | Library / Framework | Purpose |
+| :--- | :--- | :--- |
+| **Language** | Python 3.11 / 3.12 | Core logic & algorithms |
+| **Dashboard** | Streamlit | Professional dark-navy operations UI |
+| **Classical Solver** | Google OR-Tools (CP-SAT) | Exact mixed-integer constraint optimization |
+| **Quantum Framework** | Qiskit & Qiskit Aer | QUBO formulation, Ising Hamiltonian, QAOA simulation |
+| **Machine Learning** | Scikit-Learn | Supervised triage model experiment & feature evaluation |
+| **Data & Math** | Pandas, NumPy, SciPy | Matrix operations, COBYLA optimization, tabular analytics |
+| **Visualization** | Plotly | Interactive geospatial 2D maps and benchmark charts |
+| **Testing** | Pytest | Comprehensive test suite (25 unit & integration tests) |
 
-- Python 3.11 or newer
-- [Git](https://git-scm.com/downloads)
-- A GitHub account (you need collaborator access to this repo)
+*100% free and open-source. Requires zero paid APIs, zero cloud credits, and runs completely locally and offline.*
 
-### 1. Clone the repository
+---
 
+## 🚀 Quick Start & Installation
+
+### 1. Clone the Repository
 ```bash
-git clone https://github.com/vtu-qiskit-fall-fest-2026/vtu-hc-brainbyte.git
-cd vtu-hc-brainbyte
+git clone <your-repository-url>
+cd QRescue
 ```
 
-### 2. Create a virtual environment
-
+### 2. Set Up a Virtual Environment
 ```bash
+# Windows
+python -m venv .venv
+.\.venv\Scripts\activate
+
+# macOS / Linux
 python3 -m venv .venv
-source .venv/bin/activate        # Linux / macOS
-# .venv\Scripts\activate         # Windows (PowerShell)
+source .venv/bin/activate
 ```
 
-### 3. Install dependencies
-
+### 3. Install Dependencies
 ```bash
-pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 4. Run
+### 4. Run the Streamlit Dashboard
+```bash
+streamlit run app.py
+```
+Open your browser to `http://localhost:8501`.
+
+---
+
+## 🧪 Running the Test Suite
+The project includes 25 unit and integration tests covering data models, validation, response time estimation, classical optimization, QUBO construction, QAOA execution, and reporting:
 
 ```bash
-python -m src.main
+pytest -v
 ```
 
-Or launch the notebook workflow:
-
-```bash
-jupyter lab
-```
-
-### 5. Run the tests
-
-```bash
-pytest -q
+Output:
+```text
+============================= 25 passed in 5.72s ==============================
 ```
 
 ---
 
-## 🔁 How to Push Code
+## 👥 Hackathon Team Division of Work (4 Members)
 
-> Full walkthrough: **[Git & Collaboration Handbook](../vtu-hc-guide-git-and-collaboration)** — collaboration
-> workflow, branches, pull requests, reviews and conflict resolution.
+| Team Member | Domain / Responsibilities | Deliverables |
+| :--- | :--- | :--- |
+| **Member 1: AI/ML & Prioritization** | Incident data models, baseline scoring formula, synthetic dataset generation, Random Forest classifier, feature importance evaluation. | `src/data_models.py`, `src/prioritization.py`, `tests/test_prioritization.py` |
+| **Member 2: Classical Optimization** | Response-time estimation model, road curvature factor, Google OR-Tools CP-SAT formulation, greedy baseline, and constraint validation engine. | `src/response_time.py`, `src/classical_optimizer.py`, `tests/test_classical_optimizer.py` |
+| **Member 3: Quantum Optimization** | QUBO mathematical formulation, penalty multiplier tuning, Ising Hamiltonian conversion (`SparsePauliOp`), QAOA circuit assembly, and Qiskit Aer simulation. | `src/qubo_model.py`, `src/quantum_optimizer.py`, `tests/test_qubo_and_quantum.py`, `docs/methodology.md` |
+| **Member 4: UI/UX, Integration & Lead** | Streamlit multi-page dashboard, Plotly geospatial maps, dark navy styling, algorithm benchmark integration, export engine, demo script, and documentation. | `app.py`, `src/ui_helpers.py`, `src/evaluation.py`, `src/reporting.py`, `docs/demo_script.md` |
 
-### Configure Git (first time only)
+---
+
+## 🔬 Scientific Honesty & Limitations
+- **Quantum Advantage Disclosure:** QRescue does **not** claim quantum advantage. Current NISQ devices and local CPU quantum simulators incur exponential classical matrix overhead ($O(2^N)$). Classical CP-SAT solvers are significantly faster for current operational problem sizes.
+- **Hardware Realism:** The quantum experiment runs on **Qiskit Aer** (CPU statevector/shot-based simulation), **not** physical quantum processors.
+- **Synthetic Data:** Coordinates, road topologies, and incident attributes are synthetic simulations designed to test optimization performance.
+- **Div-by-Zero Protection:** Percentage improvement formulas strictly check that baseline costs are positive before calculation.
+
+---
+
+## 📤 Git Repository Initialization
+To push this project to your own GitHub account:
 
 ```bash
-git config --global user.name  "Your Name"
-git config --global user.email "you@example.com"
-```
-
-### Everyday workflow
-
-```bash
-# 1. Get the latest changes
-git checkout main
-git pull origin main
-
-# 2. Create a branch for your work
-git checkout -b feature/my-task
-
-# 3. Commit your work
+git init
 git add .
-git commit -m "feat: add variational circuit for the search problem"
-
-# 4. Push the branch
-git push -u origin feature/my-task
-
-# 5. Open a Pull Request on GitHub and request a review
-#    https://github.com/vtu-qiskit-fall-fest-2026/vtu-hc-brainbyte/compare/main...feature/my-task
-
-# 6. After approval, merge into main
-git checkout main
-git pull origin main
-git branch -d feature/my-task
+git commit -m "feat: Initial release of QRescue disaster optimization platform"
+git branch -M main
+git remote add origin https://github.com/<your-username>/QRescue.git
+git push -u origin main
 ```
-
-### Commit message convention
-
-| Prefix | Meaning |
-| :--- | :--- |
-| `feat:` | New feature |
-| `fix:` | Bug fix |
-| `docs:` | Documentation only |
-| `test:` | Adding or fixing tests |
-| `refactor:` | Code restructure, no behaviour change |
-| `chore:` | Build/config/dependency changes |
-
-### Useful commands
-
-```bash
-git status              # what changed
-git log --oneline -10   # recent commits
-git diff                # review changes before committing
-git stash               # shelve changes temporarily
-git pull --rebase       # update your branch on top of main
-```
-
-### Collaborating on the same repo
-
-- **Never push directly to `main`** — open a Pull Request.
-- **Pull before you push** to avoid rejected commits.
-- **Commit often** with clear messages.
-- **Resolve conflicts** locally: `git pull --rebase`, fix the files, then `git add` + `git rebase --continue`.
-- **Ask for a review** before merging — a second pair of eyes catches bugs fast.
-
----
-
-## ✅ Submission Checklist
-
-- [ ] Repository created and **public**
-- [ ] All team members added as **collaborators** and invitations accepted
-- [ ] `README.md` updated with project details, problem statement and solution
-- [ ] Team members listed under [Team Members](#-team-members-github-ids)
-- [ ] `requirements.txt` committed and project runs from a clean clone
-- [ ] Code pushed to `main` and the latest `main` builds successfully
-- [ ] Notebooks committed with **cleared outputs** (or use `nbstrip`)
-- [ ] `README` includes a demo screenshot / video link
-- [ ] Short project summary submitted on the hackathon portal
-
----
-
-## 📚 Resources
-
-| Resource | Link |
-| :--- | :--- |
-| 🔁 Git & collaboration handbook | [Git & Collaboration Handbook](../vtu-hc-guide-git-and-collaboration) |
-| ❓ Problem statements, solutions & terms | [Problem Statements, Solutions & Terms](../vtu-hc-guide-problem-and-solution) |
-| 📄 README writing guide | [README Guide & Template](../vtu-hc-guide-readme-template) |
-| ⚛️ Qiskit documentation | https://docs.quantum.ibm.com/ |
-| ⚛️ Qiskit Runtime & primitives | https://quantum.cloud.ibm.com/docs/ |
-| 🧪 Qiskit Aer simulator | https://docs.quantum.ibm.com/guides/simulator |
-| 💻 IBM Quantum Platform | https://quantum.cloud.ibm.com/ |
-| 🎓 Qiskit textbook | https://qiskit.qotlabs.org/learning/ |
-| 📋 GitHub Docs | https://docs.github.com/ |
 
 ---
 
 ## 📄 License
-
-Released under the [MIT License](LICENSE). See `LICENSE` for details.
-
----
-
-<div align="center">
-
-**Brainbyte** · Team ID `VTU-QFF-HC-0048` · Tier `Offline`
-· Built with ⚛️ Qiskit for the VTU-QFF Hackathon
-
-[⬆ Back to Top](#brainbyte)
-
-</div>
+This project is open-source under the [MIT License](LICENSE).
